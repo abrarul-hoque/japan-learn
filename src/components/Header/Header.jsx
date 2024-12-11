@@ -1,16 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import './Header.css';
 
 const Header = () => {
 
     const menus = [
         <>
-            <li><NavLink to="/">Lessons</NavLink></li>
-            <li><NavLink to="/tutorials">Tutorials</NavLink></li>
+            <li><NavLink to="/" className="navlink ml-1">Lessons</NavLink></li>
+            <li><NavLink to="/tutorials" className="navlink ml-1">Tutorials</NavLink></li>
         </>
     ]
     return (
-        <div>
+        <div className='max-w-7xl mx-auto'>
             <div className="navbar bg-base-100">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -34,7 +35,7 @@ const Header = () => {
                             {menus}
                         </ul>
                     </div>
-                    <a className="btn btn-ghost text-xl">Japan Learn</a>
+                    <a className="btn btn-ghost text-xl text-purple-800 font-bold">日本語 Learn</a>
                 </div>
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1">
@@ -42,7 +43,8 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <a className="btn">Login</a>
+                    <NavLink to="/login" className="btn bg-purple-800 text-white hover:bg-purple-900">Login</NavLink>
+                    {/* <a className="btn"></a> */}
                 </div>
             </div>
         </div>
