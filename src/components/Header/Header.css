@@ -1,7 +1,10 @@
 @media (hover: hover) {
-    .menu li > *:not(ul, .menu-title, details, .btn):active, .menu li > *:not(ul, .menu-title, details, .btn).active, .menu li > details > summary:active {
+
+    .menu li>*:not(ul, .menu-title, details, .btn):active,
+    .menu li>*:not(ul, .menu-title, details, .btn).active,
+    .menu li>details>summary:active {
         --tw-bg-opacity: 1;
-        background-color: purple;
+        background-color: #6b12a8;
         --tw-text-opacity: 1;
         color: white;
     }
