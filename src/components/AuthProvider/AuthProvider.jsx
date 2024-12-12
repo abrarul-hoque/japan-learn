@@ -16,9 +16,9 @@ const AuthProvider = ({ children }) => {
                 password,
                 photo,
             });
-            const userData = response.data;
-            localStorage.setItem("access-token", userData.token);
-            setUser(userData.user);
+            const userData = response?.data;
+            localStorage.setItem("access-token", userData?.token);
+            setUser(userData?.user);
             return userData;
         } catch (error) {
             console.error("Registration Error:", error);
@@ -29,9 +29,9 @@ const AuthProvider = ({ children }) => {
     const loginUser = async (email, password) => {
         try {
             const response = await axiosPublic.post("/login", { email, password });
-            const userData = response.data;
-            localStorage.setItem("access-token", userData.token);
-            setUser(userData.user);
+            const userData = response?.data;
+            localStorage.setItem("access-token", userData?.token);
+            setUser(userData?.user);
             return userData;
         } catch (error) {
             console.error("Login Error:", error);
@@ -54,8 +54,7 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem("access-token");
         if (token) {
-            axiosPublic
-                .get("/me", { headers: { Authorization: `Bearer ${token}` } })
+            axiosPublic.get("/me", { headers: { Authorization: `Bearer ${token}` } })
                 .then((res) => setUser(res.data.user))
                 .catch(() => {
                     localStorage.removeItem("access-token");

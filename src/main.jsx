@@ -19,6 +19,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import LessonDetails from './components/shared/LessonDetails';
+import PrivateRoute from './components/PrivateRoute';
 
 const queryClient = new QueryClient()
 
@@ -31,16 +32,31 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Lessons />
+        element: <PrivateRoute><Lessons /></PrivateRoute>
       },
       {
         path: "/lessons",
-        element: <Lessons />
+        element: <PrivateRoute><Lessons /></PrivateRoute>
       },
       {
         path: "/lesson/:id",
         element: <LessonDetails />,
-        loader: ({ params }) => fetch(`http://localhost:5000/lesson/${params.id}`)
+        // loader: ({ params }) => fetch(`http://localhost:5000/lesson/${params?.id}`)
+        loader: async ({ params }) => {
+          const token = localStorage.getItem("access-token");
+          const response = await fetch(`http://localhost:5000/lesson/${params.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (!response.ok) {
+            throw new Error("Unauthorized access");
+          }
+
+          return response.json();
+        }
+
       },
       {
         path: "/tutorials",

@@ -7,6 +7,7 @@ import { FaGoogle, FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import Swal from 'sweetalert2';
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import { AuthContext } from '../AuthProvider/AuthProvider';
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
     const { loginUser } = useContext(AuthContext); // Use loginUser from AuthProvider
