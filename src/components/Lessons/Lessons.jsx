@@ -1,67 +1,40 @@
 import React, { useState } from 'react';
-
-const lessonsData = [
-    {
-        id: 1,
-        title: "Basic Greetings",
-        description: "Learn how to greet people in Japanese.",
-        vocabularyCount: 10,
-        thumbnail: "https://via.placeholder.com/150",
-        vocabulary: [
-            { word: "こんにちは", pronunciation: "Konnichiwa", meaning: "Hello" },
-            { word: "おはよう", pronunciation: "Ohayou", meaning: "Good Morning" },
-            { word: "こんばんは", pronunciation: "Konbanwa", meaning: "Good Evening" },
-        ],
-    },
-    {
-        id: 2,
-        title: "Numbers",
-        description: "Learn how to count in Japanese.",
-        vocabularyCount: 15,
-        thumbnail: "https://via.placeholder.com/150",
-        vocabulary: [
-            { word: "いち", pronunciation: "Ichi", meaning: "One" },
-            { word: "に", pronunciation: "Ni", meaning: "Two" },
-            { word: "さん", pronunciation: "San", meaning: "Three" },
-        ],
-    },
-    // Add more lessons as needed
-];
+import useLessons from '../hooks/useLessons';
+import { NavLink } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Lessons = () => {
+    const [lessons] = useLessons();
     const [selectedLesson, setSelectedLesson] = useState(null);
+    console.log(lessons)
 
     return (
         <div className="max-w-7xl mx-auto p-4">
             <h1 className="text-2xl font-bold mb-6 text-center">Lessons</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {lessonsData.map((lesson) => (
+                {lessons?.map((lesson) => (
                     <div
-                        key={lesson.id}
+                        key={lesson?._id}
                         className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
                     >
-                        <img
-                            src={lesson.thumbnail}
-                            alt={lesson.title}
-                            className="w-full h-32 object-cover rounded-md mb-4"
-                        />
-                        <h2 className="text-lg font-semibold mb-2">{lesson.title}</h2>
-                        <p className="text-gray-600 text-sm mb-4">{lesson.description}</p>
-                        <div className="flex items-center justify-between text-gray-700 mb-2">
-                            <span>{lesson.vocabularyCount} Words</span>
-                            <button
-                                onClick={() => setSelectedLesson(lesson)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600"
+                        <p className='font-semibold text-center text-base '>Lesson No: {lesson?.lessonNo}</p>
+                        <h2 className="text-2xl font-bold mb-2 text-center text-purple-900">{lesson?.lessonName}</h2>
+                        <p className="text-gray-600 text-sm mb-4 text-center">{lesson?.description}</p>
+                        <p className='text-center'>{lesson?.vocabulary.length} Words</p>
+
+                        <div className="flex items-center justify-center text-gray-700 my-2">
+                            <Link to={`/lesson/${lesson?.lessonNo}`}
+                                className="bg-purple-800 text-white px-3 py-1 rounded-md hover:bg-purple-900"
                             >
                                 View Vocabulary
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 ))}
             </div>
 
             {/* Vocabulary Modal */}
-            {selectedLesson && (
+            {/* {selectedLesson && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                     <div className="bg-white rounded-lg shadow-lg max-w-md w-full p-6 relative">
                         <h2 className="text-xl font-bold mb-4">{selectedLesson.title}</h2>
@@ -91,7 +64,7 @@ const Lessons = () => {
                         </ul>
                     </div>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };
