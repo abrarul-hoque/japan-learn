@@ -39,10 +39,17 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    const logOut = () => {
-        localStorage.removeItem("access-token");
-        setUser(null);
+    const logOut = async () => {
+        try {
+            localStorage.removeItem("access-token");
+            setUser(null); // Clear user from context
+            return Promise.resolve();
+        } catch (error) {
+            console.error("Error logging out:", error);
+            return Promise.reject(error);
+        }
     };
+
 
     useEffect(() => {
         const token = localStorage.getItem("access-token");
