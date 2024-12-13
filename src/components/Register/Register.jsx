@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider/AuthProvider";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 // Replace with your actual image hosting API key from imgbb
 const imageHostingKey = import.meta.env.VITE_IMAGE_HOSTING_KEY;
@@ -14,6 +15,7 @@ const Register = () => {
     const { registerUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleRegister = async (data) => {
         setLoading(true);
@@ -74,13 +76,19 @@ const Register = () => {
                         />
                         {errors.email && <span className="text-red-500">Email is required</span>}
                     </div>
-                    <div className="mb-4">
+                    <div className="mb-4 form-control relative">
                         <label className="block text-gray-700">Password</label>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             {...register("password", { required: true, minLength: 8 })}
                             className="input input-bordered w-full"
                         />
+                        <span
+                            className="btn bg-transparent border-none absolute top-6 right-0"
+                            onClick={() => setShowPassword(!showPassword)}
+                        >
+                            {showPassword ? <FaRegEyeSlash className="text-2xl" /> : <FaRegEye className="text-2xl" />}
+                        </span>
                         {errors.password?.type === "required" && <span className="text-red-500">Password is required</span>}
                         {errors.password?.type === "minLength" && <span className="text-red-500">Password must be at least 8 characters</span>}
                     </div>
@@ -95,7 +103,7 @@ const Register = () => {
                     </div>
                     <button
                         type="submit"
-                        className="btn btn-primary w-full"
+                        className="btn bg-purple-800 hover:bg-purple-900 text-white w-full mb-6"
                         disabled={loading}
                     >
                         {loading ? "Registering..." : "Register"}

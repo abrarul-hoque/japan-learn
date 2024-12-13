@@ -84,7 +84,8 @@ const Header = () => {
                                     <div className='flex flex-col text-center'>
                                         <p className=' text-[#ff9123] font-bold text-base p-3 rounded-xl'>{user.name}</p>
                                         <p className='text-warning my-4 font-semibold text-base'>Logged in as: {user?.role === "user" ? "User" : "Admin"} </p>
-                                        <button onClick={handleSignOut} className='mb-3 btn bg-purple-800 text-white p-2 rounded-xl hover:bg-purple-900'>Logout</button>
+                                        {user?.role === "admin" && <><NavLink className="bg-purple-700 mb-2 p-2 rounded-xl" to="/dashboard">Dashboard</NavLink></>}
+                                        <button onClick={handleSignOut} className='mb-2 btn bg-purple-800 P-1 text-white rounded-xl hover:bg-purple-900'>Logout</button>
                                     </div>
                                 </Tooltip>
                             </div>

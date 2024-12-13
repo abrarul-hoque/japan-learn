@@ -2,7 +2,7 @@ import axios from "axios";
 
 const useAxiosPublic = () => {
     const instance = axios.create({
-        baseURL: "http://localhost:5000",
+        baseURL: "https://japan-learn-server.vercel.app",
     });
 
     instance.interceptors.request.use((config) => {

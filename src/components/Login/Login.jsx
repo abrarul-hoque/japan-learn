@@ -32,13 +32,19 @@ const Login = () => {
 
     const handleLogin = async (data) => {
         try {
-            const userData = await loginUser(data.email, data.password);
+            const userData = await loginUser(data?.email, data?.password);
             Swal.fire({
                 title: "Success",
                 text: "Login successful!",
                 icon: "success",
             });
-            navigate(from, { replace: true });
+
+            // Check if the logged-in user is an admin
+            if (userData?.role === "admin") {
+                navigate("/dashboard", { replace: true });
+            } else {
+                navigate(from, { replace: true });  // Redirect to the previous page or home
+            }
         } catch (error) {
             console.error("Login error:", error);
             errorToast(error.response?.data?.message || "Login failed. Please try again.");

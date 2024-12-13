@@ -20,9 +20,16 @@ import {
 } from '@tanstack/react-query'
 import LessonDetails from './components/shared/LessonDetails';
 import PrivateRoute from './components/PrivateRoute';
+import AdminDashboard from './components/AdminDashboard/AdminDashboard';
+import AdminLayout from './components/AdminLayout';
+import AddLesson from './components/AdminDashboard/AddLesson';
+import AdminHome from './components/AdminDashboard/AdminHome';
+import Lesson from './components/AdminDashboard/Lesson';
+import ManageUsers from './components/AdminDashboard/ManageUsers';
+import LessonManagement from './components/AdminDashboard/LessonManagement';
+import VocabularyManagement from './components/AdminDashboard/VocabularyManagement';
 
 const queryClient = new QueryClient()
-
 
 const router = createBrowserRouter([
   {
@@ -40,11 +47,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/lesson/:id",
-        element: <LessonDetails />,
-        // loader: ({ params }) => fetch(`http://localhost:5000/lesson/${params?.id}`)
+        element: <PrivateRoute><LessonDetails /></PrivateRoute>,
         loader: async ({ params }) => {
           const token = localStorage.getItem("access-token");
-          const response = await fetch(`http://localhost:5000/lesson/${params.id}`, {
+          const response = await fetch(`https://japan-learn-server.vercel.app/lesson/${params.id}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -56,7 +62,6 @@ const router = createBrowserRouter([
 
           return response.json();
         }
-
       },
       {
         path: "/tutorials",
@@ -72,7 +77,43 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: "/dashboard",
+    element: <AdminDashboard />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "",
+        element: <AdminHome />,
+      },
+      {
+        path: "lesson",
+        element: <Lesson />,
+      },
+      {
+        path: "add-lesson",
+        element: <AddLesson />,
+      },
+      {
+        path: "add-vocabulary",
+        element: <AddLesson />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
+      },
+      {
+        path: "lesson-management",
+        element: <LessonManagement />,
+      },
+      {
+        path: "vocabulary-management",
+        element: <VocabularyManagement />,
+      },
+    ]
+  }
 ]);
+
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
